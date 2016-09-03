@@ -1,4 +1,4 @@
-package com.narvar.exceptions;
+package com.narvar.exceptions.handle;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +25,9 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 import org.springframework.web.multipart.support.MissingServletRequestPartException;
 import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+
+import com.narvar.exceptions.ErrorCodes;
+import com.narvar.exceptions.RestMessageObject;
 
 /*
  * Primary Class which advises on the Global Exception Handling 
