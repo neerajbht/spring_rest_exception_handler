@@ -87,7 +87,6 @@ public class GreetingControllerTests {
 				.andExpect(status().is(415));
 
 	}
-	
 
 	@Test
 	public void genericJsonResponseReq() throws Exception {

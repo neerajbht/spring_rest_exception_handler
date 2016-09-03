@@ -7,8 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Core application exception class. Implementors need to use this in conjunction with error code mapping
- * defined in tenant configuration files.
+ * Generic Exception file to be used to catch all excetion type in application
  *
  */
 public class RestGenericException extends Exception{
