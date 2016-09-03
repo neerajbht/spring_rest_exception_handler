@@ -6,6 +6,7 @@ import java.util.concurrent.atomic.AtomicLong;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,7 +23,7 @@ import com.narvar.services.MessageResponseServices;
 import com.narvar.services.RequestBuillderService;
 
 @RestController
-public class GreetingController implements ErrorCodes{
+public class GreetingController implements ErrorCodes {
 
 	private static final String template = "Hello, %s!";
 	private final AtomicLong counter = new AtomicLong();
@@ -80,12 +81,15 @@ public class GreetingController implements ErrorCodes{
 			@RequestParam Map<String, Object> reqParamMap, @RequestHeader Map<String, Object> headerMap,
 			HttpServletRequest request) throws Throwable {
 
+		Map<String, Object> processedRequest = requestBuilderSerive.buildRequestMap().addHeader(headerMap)
+				.addPathParams(pathParamMap).addRequestParams(reqParamMap).get();
+
 		throw new HttpMediaTypeNotSupportedException(CUSTOM_EXCEPTION_2);
 
 	}
-	
+
 	/*
-	 * method to get XML response 
+	 * method to get XML response
 	 */
 
 	@RequestMapping(path = "/xmlRequest", method = RequestMethod.GET)
@@ -99,7 +103,7 @@ public class GreetingController implements ErrorCodes{
 		String url = (String) request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE);
 		return (ResponseEntity<Object>) responseMessageService.processRequest(processedRequest, url, RequestMethod.PUT);
 	}
-	
+
 	/*
 	 * method to emulate No Handle Excpetion
 	 */
@@ -108,12 +112,27 @@ public class GreetingController implements ErrorCodes{
 			@RequestParam Map<String, Object> reqParamMap, @RequestHeader Map<String, Object> headerMap,
 			HttpServletRequest request) throws Throwable {
 		String url = (String) request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE);
-		 
+
 		throw new NoHandlerFoundException(CUSTOM_EXCEPTION_1, url, null);
-		
-		
-		
- 	
+
 	}
 
+	// adding case for post method only supports json/xml as content type
+	
+	// 
+	
+	@RequestMapping(path = "/greetingPost", method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON_VALUE,
+			MediaType.APPLICATION_XML_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE,
+					MediaType.APPLICATION_XML_VALUE })
+	public ResponseEntity<Object> getGreetingPost(@PathVariable Map<String, Object> pathParamMap,
+			@RequestParam Map<String, Object> reqParamMap, @RequestHeader Map<String, Object> headerMap,
+			HttpServletRequest request) throws Throwable {
+
+		Map<String, Object> processedRequest = requestBuilderSerive.buildRequestMap().addHeader(headerMap)
+				.addPathParams(pathParamMap).addRequestParams(reqParamMap).get();
+
+		String url = (String) request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE);
+
+		return (ResponseEntity<Object>) responseMessageService.processRequest(processedRequest, url, RequestMethod.PUT);
+	}
 }
