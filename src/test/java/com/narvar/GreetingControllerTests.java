@@ -47,44 +47,11 @@ public class GreetingControllerTests {
 
 	}
 
-	/*
-	 * Junit Test case for failed Cases ..
-	 */
-	/*
-	 * @Test public void genericBadRequestException() throws Exception {
-	 * 
-	 * this.mockMvc.perform(get("/g1")).andDo(print()).andExpect(status().
-	 * is4xxClientError()) .andExpect(jsonPath("$.Status").value("404"));
-	 * 
-	 * }
-	 */
-
-	/*
-	 * Junit Test case for failed Cases ..
-	 */
-
-	/*
-	 * @Test public void genericInvalidRequestType() throws Exception {
-	 * 
-	 * this.mockMvc.perform(delete("/greeting")).andDo(print()).andExpect(status
-	 * ().is4xxClientError()) .andExpect(jsonPath("$.status").value("405"));
-	 * 
-	 * }
-	 */
-
 	@Test
 	public void greetingJsonEx() throws Exception {
 
 		this.mockMvc.perform(post("/jsonRequestEx")).andDo(print()).andExpect(status().is4xxClientError())
 				.andExpect(jsonPath("$.status").value("UNSUPPORTED_MEDIA_TYPE"));
-
-	}
-
-	@Test
-	public void genericMediaNotSupported() throws Exception {
-
-		this.mockMvc.perform(post("/greetingPost").contentType(MediaType.APPLICATION_FORM_URLENCODED)).andDo(print())
-				.andExpect(status().is(415));
 
 	}
 
@@ -103,5 +70,30 @@ public class GreetingControllerTests {
 				.andExpect(jsonPath("$.status").value("NOT_FOUND"));
 
 	}
+
+	@Test
+	public void genericMediaNotSupported() throws Exception {
+
+		this.mockMvc.perform(post("/greetingPost").contentType(MediaType.APPLICATION_FORM_URLENCODED)).andDo(print())
+				.andExpect(status().is(415));
+
+	}
+
+	@Test
+	public void genericBadRequest() throws Exception {
+
+		this.mockMvc.perform(get("/jsonRequest/123")).andDo(print()).andExpect(status().is(404));
+
+	}
+
+	@Test
+	public void genericInvalidHandle() throws Exception {
+
+		this.mockMvc.perform(post("/jsonRequest")).andDo(print()).
+		andExpect(status().is(405));
+
+	}
+	
+	
 
 }

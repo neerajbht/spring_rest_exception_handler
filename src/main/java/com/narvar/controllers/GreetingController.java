@@ -119,8 +119,6 @@ public class GreetingController implements ErrorCodes {
 
 	// adding case for post method only supports json/xml as content type
 	
-	// 
-	
 	@RequestMapping(path = "/greetingPost", method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON_VALUE,
 			MediaType.APPLICATION_XML_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE,
 					MediaType.APPLICATION_XML_VALUE })
