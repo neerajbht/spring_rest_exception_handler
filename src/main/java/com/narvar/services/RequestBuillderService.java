@@ -39,6 +39,9 @@ public class RequestBuillderService {
 
 	public RequestBuillderService addHeader(Map<String, Object> header) throws RestGenericException {
 		checkRequest();
+
+		// check in if headers are not proper for unsupported meida type
+
 		request.put(RequestSegment.Header.name(), header);
 		return this;
 	}
@@ -58,6 +61,7 @@ public class RequestBuillderService {
 	private void checkRequest() {
 		if (request == null)
 			throw new IllegalStateException("Call buildRequestMap() before adding segments.");
+
 	}
 
 	public Map<String, Object> get() {
