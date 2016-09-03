@@ -39,9 +39,6 @@ public class RequestBuillderService {
 
 	public RequestBuillderService addHeader(Map<String, Object> header) throws RestGenericException {
 		checkRequest();
-
-		// check in if headers are not proper for unsupported meida type
-
 		request.put(RequestSegment.Header.name(), header);
 		return this;
 	}
