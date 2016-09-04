@@ -1,4 +1,3 @@
-
 package com.narvar.exceptions.types;
 
 import java.util.Arrays;
@@ -8,6 +7,7 @@ import java.util.Map;
 
 /**
  * Generic Exception file to be used to catch all excetion type in application
+ * 
  *
  */
 public class RestGenericException extends Exception{
